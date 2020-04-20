@@ -74,9 +74,13 @@ export default {
         console.log(res)
 
         // 登录成功
-      }).catch(err => {
+        this.$message({
+          message: '登录成功',
+          type: 'success'
+        })
+      }).catch(err => { // 登录失败
         console.log('登录失败', err)
-        // 登录失败
+        this.$message.error('登录失败，手机号或验证码错误')
       })
     }
   }
