@@ -9,6 +9,7 @@ import VueRouter from 'vue-router'
 //       如果需要进行父级路径查找的都使用 @
 import Login from '@/views/login/'
 import Home from '@/views/home/'
+import Layout from '@/views/layout/'
 
 Vue.use(VueRouter)
 
@@ -21,11 +22,18 @@ const routes = [
   },
   {
     path: '/',
+    name: 'layout',
+    component: Layout,
+    children: [
+      {
+        path: '', // path 为空，会作为默认子路由渲染
 
-    // 路由的名字是干啥的？
-    // 参考：https://gitee.com/lipengzhou/toutiao-publish-admin/issues/I1F1BA
-    name: 'home',
-    component: Home
+        // 路由的名字是干啥的？
+        // 参考：https://gitee.com/lipengzhou/toutiao-publish-admin/issues/I1F1BA
+        name: 'home',
+        component: Home
+      }
+    ]
   }
 ]
 
