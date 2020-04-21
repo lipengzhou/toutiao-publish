@@ -15,7 +15,8 @@
         2、给需要验证的表单项 el-form-item 绑定 prop 属性
            注意：prop 属性需要指定表单对象中的数据名称
         3、通过 el-from 组件的 rules 属性配置验证规则
-
+          具体的验证规则可以参考：https://github.com/yiminghe/async-validator
+          如果内置的验证规则不满足，也可以自定义验证规则
         手动触发表单验证：
         1、给 el-form 设置 ref 起个名字（随便起名，不要重复即可）
         2、通过 ref 获取 el-form 组件，调用组件的 validate 进行验证
@@ -55,7 +56,7 @@
 </template>
 
 <script>
-import request from '@/utils/request'
+import { login } from '@/api/user'
 
 export default {
   name: 'LoginIndex',
@@ -125,12 +126,12 @@ export default {
       // 开启登陆中 loading...
       this.loginLoading = true
 
-      request({
-        method: 'POST',
-        url: '/mp/v1_0/authorizations',
-        // data 用来设置 POST 请求体
-        data: this.user
-      }).then(res => {
+      // 对于代码中的请求操作
+      // 1、接口请求可能需要重用
+      // 2、实际工作中，接口非常容易变动，改起来麻烦
+      // 我们建议的做法是把所有的请求都封装成函数然后统一的组织到模块中进行管理
+      // 这样做的好处就是：管理维护更方便，也好重用
+      login(this.user).then(res => {
         console.log(res)
 
         // 登录成功
