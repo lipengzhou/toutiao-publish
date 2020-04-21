@@ -8,6 +8,7 @@ import VueRouter from 'vue-router'
 // 使用建议：如果加载的资源路径就在当前目录下，那就正常写
 //       如果需要进行父级路径查找的都使用 @
 import Login from '@/views/login/'
+import Home from '@/views/home/'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,14 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/',
+
+    // 路由的名字是干啥的？
+    // 参考：https://gitee.com/lipengzhou/toutiao-publish-admin/issues/I1F1BA
+    name: 'home',
+    component: Home
   }
 ]
 

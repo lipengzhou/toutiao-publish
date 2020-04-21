@@ -65,8 +65,8 @@ export default {
   data () {
     return {
       user: {
-        mobile: '', // 手机号
-        code: '', // 验证码
+        mobile: '13911111111', // 手机号
+        code: '246810', // 验证码
         agree: false // 是否同意协议
       },
       // checked: false, // 是否同意协议的选中状态
@@ -74,12 +74,12 @@ export default {
       formRules: { // 表单验证规则配置
         // 要验证的数据名称：规则列表[]
         mobile: [
-          { required: true, message: '请输入手机号', trigger: 'change' },
-          { pattern: /^1[3|5|7|8|9]\d{9}$/, message: '请输入正确的号码格式', trigger: 'change' }
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { pattern: /^1[3|5|7|8|9]\d{9}$/, message: '请输入正确的号码格式', trigger: 'blur' }
         ],
         code: [
-          { required: true, message: '验证码不能为空', trigger: 'change' },
-          { pattern: /^\d{6}$/, message: '请输入正确的验证码格式' }
+          { required: true, message: '验证码不能为空', trigger: 'blur' },
+          { pattern: /^\d{6}$/, message: '请输入正确的验证码格式', trigger: 'blur' }
         ],
         agree: [
           {
@@ -94,7 +94,7 @@ export default {
               }
             },
             // message: '请勾选同意用户协议',
-            trigger: 'change'
+            trigger: 'blur'
           }
         ]
       }
@@ -142,6 +142,13 @@ export default {
 
         // 关闭 loading
         this.loginLoading = false
+
+        // 跳转到首页
+        // this.$router.push('/')
+
+        this.$router.push({
+          name: 'home'
+        })
       }).catch(err => { // 登录失败
         console.log('登录失败', err)
         this.$message.error('登录失败，手机号或验证码错误')
