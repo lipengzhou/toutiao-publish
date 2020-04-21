@@ -3,11 +3,8 @@
     el-menu-item 的 index 不能重复，确保唯一即可
    -->
   <el-menu
-    default-active="2"
-    class="el-menu-vertical-demo"
-    @open="handleOpen"
-    @close="handleClose"
-    background-color="#545c64"
+    default-active="/"
+    background-color="#002033"
     text-color="#fff"
     active-text-color="#ffd04b"
     router
@@ -55,14 +52,7 @@ export default {
   watch: {},
   created () {},
   mounted () {},
-  methods: {
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
-    }
-  }
+  methods: {}
 }
 </script>
 
