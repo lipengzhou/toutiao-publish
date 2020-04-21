@@ -57,5 +57,15 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ccc;
+  .avatar-wrap {
+    display: flex;
+    align-items: center;
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  }
 }
 </style>
