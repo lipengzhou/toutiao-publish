@@ -4,7 +4,7 @@
       class="aside"
       width="200px"
     >
-      <app-aside />
+      <app-aside class="aside-menu" />
     </el-aside>
     <el-container>
       <el-header class="header">Header</el-header>
@@ -47,6 +47,9 @@ export default {
 
 .aside {
   background-color: #d3dce6;
+  .aside-menu {
+    height: 100%;
+  }
 }
 
 .header {
