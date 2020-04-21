@@ -15,10 +15,14 @@
         2、给需要验证的表单项 el-form-item 绑定 prop 属性
            注意：prop 属性需要指定表单对象中的数据名称
         3、通过 el-from 组件的 rules 属性配置验证规则
+
+        手动触发表单验证：
+        1、给 el-form 设置 ref 起个名字（随便起名，不要重复即可）
+        2、通过 ref 获取 el-form 组件，调用组件的 validate 进行验证
        -->
       <el-form
         class="login-form"
-        ref="form"
+        ref="login-form"
         :model="user"
         :rules="formRules"
       >
@@ -85,12 +89,22 @@ export default {
   methods: {
     onLogin () {
       // 获取表单数据（根据接口要求绑定数据）
-      const user = this.user
+      // const user = this.user
 
       // 表单验证
+      // validate 方法是异步的
+      this.$refs['login-form'].validate(valid => {
+        // 如果表单验证失败，停止请求提交
+        if (!valid) {
+          return
+        }
 
-      // 验证通过，提交登录
+        // 验证通过，请求登录
+        this.login()
+      })
+    },
 
+    login () {
       // 开启登陆中 loading...
       this.loginLoading = true
 
@@ -98,7 +112,7 @@ export default {
         method: 'POST',
         url: '/mp/v1_0/authorizations',
         // data 用来设置 POST 请求体
-        data: user
+        data: this.user
       }).then(res => {
         console.log(res)
 
