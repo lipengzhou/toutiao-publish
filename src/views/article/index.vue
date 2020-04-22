@@ -84,6 +84,8 @@
 </template>
 
 <script>
+import { getArticles } from '@/api/article'
+
 export default {
   name: 'ArticleIndex',
   components: {},
@@ -116,14 +118,23 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      }],
+      articles: [] // 文章数据列表
     }
   },
   computed: {},
   watch: {},
-  created () {},
+  created () {
+    this.loadArticles()
+  },
   mounted () {},
   methods: {
+    loadArticles () {
+      getArticles().then(res => {
+        this.articles = res.data.data.results
+      })
+    },
+
     onSubmit () {
       console.log('submit!')
     }
