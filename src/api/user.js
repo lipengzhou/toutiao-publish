@@ -15,6 +15,8 @@ export const login = data => {
 
 // 获取用户信息
 export const getUserProfile = () => {
+  const user = JSON.parse(window.localStorage.getItem('user'))
+
   return request({
     method: 'GET',
     url: '/mp/v1_0/user/profile',
@@ -24,7 +26,8 @@ export const getUserProfile = () => {
       // 属性名和值都得看接口的要求
       // 属性名：Authorization，接口要求的
       // 属性值：Bearer空格token数据
-      Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTg5MDkxMjYsInVzZXJfaWQiOjEsInJlZnJlc2giOmZhbHNlLCJ2ZXJpZmllZCI6dHJ1ZX0.EdKErKDqMc3snkYxqt02jSa8t9G44002yWKY3CMOMJg'
+      // Bearer 就是持票人的意思，就好比你的学生证上写了学生证三个字
+      Authorization: `Bearer ${user.token}`
     }
   })
 }
