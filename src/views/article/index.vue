@@ -56,6 +56,8 @@
           width 可以设定表格列的宽度
           label 可以设定列的标题
           prop  用来设定要渲染的列表项数据字段，只能展示文本
+
+        3、表格列默认只能渲染普通文本，如果需要展示其它内容，例如放个按钮啊、放个图片啊，那就需要自定义表格列模板了：https://element.eleme.cn/#/zh-CN/component/table#zi-ding-yi-lie-mo-ban
        -->
       <el-table
         :data="articles"
@@ -81,8 +83,22 @@
           label="发布时间">
         </el-table-column>
         <el-table-column
-          prop="address"
           label="操作">
+          <!-- 如果需要自定义表格列模板，则把需要自定义的内容放到 template 里面 -->
+          <template>
+            <el-button
+              size="mini"
+              circle
+              icon="el-icon-edit"
+              type="primary"
+            ></el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              icon="el-icon-delete"
+              circle
+            ></el-button>
+          </template>
         </el-table-column>
       </el-table>
       <!-- /数据列表 -->
