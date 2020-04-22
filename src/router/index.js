@@ -10,6 +10,7 @@ import VueRouter from 'vue-router'
 import Login from '@/views/login/'
 import Home from '@/views/home/'
 import Layout from '@/views/layout/'
+import Article from '@/views/article/'
 
 Vue.use(VueRouter)
 
@@ -37,6 +38,11 @@ const routes = [
         // 参考：https://gitee.com/lipengzhou/toutiao-publish-admin/issues/I1F1BA
         name: 'home',
         component: Home
+      },
+      {
+        path: '/article',
+        name: 'article',
+        component: Article
       }
     ]
   }
