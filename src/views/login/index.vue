@@ -138,7 +138,7 @@ export default {
       // 我们建议的做法是把所有的请求都封装成函数然后统一的组织到模块中进行管理
       // 这样做的好处就是：管理维护更方便，也好重用
       login(this.user).then(res => {
-        console.log(res)
+        // console.log(res)
 
         // 登录成功
         this.$message({
