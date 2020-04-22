@@ -2,14 +2,31 @@
   <el-container class="layout-container">
     <el-aside
       class="aside"
-      width="200px"
+      width="auto"
     >
-      <app-aside class="aside-menu" />
+      <app-aside
+        class="aside-menu"
+        :is-collapse="isCollapse"
+      />
     </el-aside>
     <el-container>
       <el-header class="header">
         <div>
-          <i class="el-icon-s-fold"></i>
+          <!--
+            class 样式处理
+              {
+                css类名: 布尔值
+              }
+              true：作用类名
+              false：不作用类名
+           -->
+          <i
+            :class="{
+              'el-icon-s-fold': isCollapse,
+              'el-icon-s-unfold': !isCollapse
+            }"
+            @click="isCollapse = !isCollapse"
+          ></i>
           <span>江苏传智播客科技教育有限公司</span>
         </div>
         <el-dropdown>
@@ -44,7 +61,8 @@ export default {
   props: {},
   data () {
     return {
-      user: {} // 当前登录用户信息
+      user: {}, // 当前登录用户信息
+      isCollapse: false // 侧边菜单栏的展示状态
     }
   },
   computed: {},
