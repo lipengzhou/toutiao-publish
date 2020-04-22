@@ -75,8 +75,15 @@
           label="标题">
         </el-table-column>
         <el-table-column
-          prop="status"
           label="状态">
+          <!-- 如果需要在自定义列模板中获取当前遍历项数据，那么就在 template 上声明 slot-scope="scope" -->
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.status === 0" type="warning">草稿</el-tag>
+            <el-tag v-else-if="scope.row.status === 1">待审核</el-tag>
+            <el-tag v-else-if="scope.row.status === 2" type="success">审核通过</el-tag>
+            <el-tag v-else-if="scope.row.status === 3" type="danger">审核失败</el-tag>
+            <el-tag v-else-if="scope.row.status === 4" type="info">已删除</el-tag>
+          </template>
         </el-table-column>
         <el-table-column
           prop="pubdate"
