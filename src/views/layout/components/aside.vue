@@ -3,7 +3,7 @@
     el-menu-item 的 index 不能重复，确保唯一即可
    -->
   <el-menu
-    class="nav-menu"
+    class="nav-menu el-menu-vertical-demo"
     default-active="/"
     background-color="#002033"
     text-color="#fff"
@@ -66,5 +66,10 @@ export default {
     margin-right: 10px;
     padding-left: 5px;
   }
+}
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
 }
 </style>
