@@ -141,7 +141,7 @@
         <el-table-column
           label="操作">
           <!-- 如果需要自定义表格列模板，则把需要自定义的内容放到 template 里面 -->
-          <template>
+          <template slot-scope="scope">
             <el-button
               size="mini"
               circle
@@ -153,6 +153,7 @@
               type="danger"
               icon="el-icon-delete"
               circle
+              @click="onDeleteArticle(scope.row.id)"
             ></el-button>
           </template>
         </el-table-column>
@@ -183,7 +184,8 @@
 <script>
 import {
   getArticles,
-  getArticleChannels
+  getArticleChannels,
+  deleteArticle
 } from '@/api/article'
 
 export default {
@@ -259,6 +261,30 @@ export default {
       getArticleChannels().then(res => {
         this.channels = res.data.data.channels
       })
+    },
+
+    onDeleteArticle (articleId) {
+      console.log(articleId)
+      this.$confirm('确认删除吗？', '删除提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 确认执行这里
+        deleteArticle(articleId).then(res => {
+          console.log(res)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+      // 找到数据接口
+      // 封装请求方法
+      // 删除请求调用
+      // 处理响应结果
+      // console.log('onDeleteArticle')
     }
   }
 }
