@@ -128,10 +128,14 @@
       <!-- /数据列表 -->
 
       <!-- 列表分页 -->
+      <!--
+        total 用来设定总数据的条数
+        它默认按照 10 条每页计算总页码
+       -->
       <el-pagination
         layout="prev, pager, next"
         background
-        :total="1000"
+        :total="totalCount"
         @current-change="onCurrentChange"
       />
       <!-- /列表分页 -->
@@ -165,7 +169,8 @@ export default {
         { status: 2, text: '审核通过', type: 'success' }, // 2
         { status: 3, text: '审核失败', type: 'warning' }, // 3
         { status: 4, text: '已删除', type: 'danger' } // 4
-      ]
+      ],
+      totalCount: 0 // 总数据条数
     }
   },
   computed: {},
@@ -180,7 +185,9 @@ export default {
         page,
         per_page: 10
       }).then(res => {
-        this.articles = res.data.data.results
+        const { results, total_count: totalCount } = res.data.data
+        this.articles = results
+        this.totalCount = totalCount
       })
     },
 
