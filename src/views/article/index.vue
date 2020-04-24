@@ -54,7 +54,11 @@
             button 按钮的 click 事件有个默认参数
             当你没有指定参数的时候，它会默认传递一个没用的数据
            -->
-          <el-button type="primary" @click="loadArticles(1)">查询</el-button>
+          <el-button
+            type="primary"
+            :disabled="loading"
+            @click="loadArticles(1)"
+          >查询</el-button>
         </el-form-item>
       </el-form>
       <!-- /数据筛选表单 -->
@@ -82,13 +86,14 @@
         style="width: 100%"
         class="list-table"
         size="mini"
+        v-loading="loading"
       >
         <el-table-column
           prop="date"
           label="封面">
           <template slot-scope="scope">
             <el-image
-              style="width: 100px; height: 100px"
+              style="width: 50px; height: 50px"
               :src="scope.row.cover.images[0]"
               fit="cover"
               lazy
@@ -166,8 +171,9 @@
         layout="prev, pager, next"
         background
         :total="totalCount"
-        @current-change="onCurrentChange"
         :page-size="pageSize"
+        :disabled="loading"
+        @current-change="onCurrentChange"
       />
       <!-- /列表分页 -->
     </el-card>
@@ -209,7 +215,8 @@ export default {
       status: null, // 查询文章的状态，不传就是全部
       channels: [], // 文章频道列表
       channelId: null, // 查询文章的频道
-      rangeDate: null // 筛选的范围日期
+      rangeDate: null, // 筛选的范围日期
+      loading: true // 表单数据加载中 loading
     }
   },
   computed: {},
@@ -221,6 +228,8 @@ export default {
   mounted () {},
   methods: {
     loadArticles (page = 1) {
+      // 展示加载中 loading
+      this.loading = true
       getArticles({
         page,
         per_page: this.pageSize,
@@ -232,6 +241,9 @@ export default {
         const { results, total_count: totalCount } = res.data.data
         this.articles = results
         this.totalCount = totalCount
+
+        // 关闭加载中 loading
+        this.loading = false
       })
     },
 
