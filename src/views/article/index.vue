@@ -174,6 +174,7 @@
         :total="totalCount"
         :page-size="pageSize"
         :disabled="loading"
+        :current-page.sync="page"
         @current-change="onCurrentChange"
       />
       <!-- /列表分页 -->
@@ -218,7 +219,8 @@ export default {
       channels: [], // 文章频道列表
       channelId: null, // 查询文章的频道
       rangeDate: null, // 筛选的范围日期
-      loading: true // 表单数据加载中 loading
+      loading: true, // 表单数据加载中 loading
+      page: 1 // 当前页码
     }
   },
   computed: {},
@@ -273,7 +275,8 @@ export default {
       }).then(() => {
         // 确认执行这里
         deleteArticle(articleId.toString()).then(res => {
-          console.log(res)
+          // 删除成功，更新当前页的文章数据列表
+          this.loadArticles(this.page)
         })
       }).catch(() => {
         this.$message({
