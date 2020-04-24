@@ -40,12 +40,14 @@
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker
-            v-model="form.date1"
+            v-model="rangeDate"
             type="datetimerange"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            :default-time="['12:00:00']">
-          </el-date-picker>
+            :default-time="['12:00:00']"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+          />
         </el-form-item>
         <el-form-item>
           <!--
@@ -157,6 +159,8 @@
         total 用来设定总数据的条数
         它默认按照 10 条每页计算总页码
         page-size 每页显示条目个数，支持 .sync 修饰符，默认每页 10 条
+
+        90 3 90 / 3 = 30
        -->
       <el-pagination
         layout="prev, pager, next"
@@ -204,7 +208,8 @@ export default {
       pageSize: 10, // 每页大小
       status: null, // 查询文章的状态，不传就是全部
       channels: [], // 文章频道列表
-      channelId: null // 查询文章的频道
+      channelId: null, // 查询文章的频道
+      rangeDate: null // 筛选的范围日期
     }
   },
   computed: {},
@@ -220,7 +225,9 @@ export default {
         page,
         per_page: this.pageSize,
         status: this.status,
-        channel_id: this.channelId
+        channel_id: this.channelId,
+        begin_pubdate: this.rangeDate ? this.rangeDate[0] : null, // 开始日期
+        end_pubdate: this.rangeDate ? this.rangeDate[1] : null // 截止日期
       }).then(res => {
         const { results, total_count: totalCount } = res.data.data
         this.articles = results
