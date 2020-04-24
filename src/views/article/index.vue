@@ -131,12 +131,14 @@
       <!--
         total 用来设定总数据的条数
         它默认按照 10 条每页计算总页码
+        page-size 每页显示条目个数，支持 .sync 修饰符，默认每页 10 条
        -->
       <el-pagination
         layout="prev, pager, next"
         background
         :total="totalCount"
         @current-change="onCurrentChange"
+        :page-size="pageSize"
       />
       <!-- /列表分页 -->
     </el-card>
@@ -170,7 +172,8 @@ export default {
         { status: 3, text: '审核失败', type: 'warning' }, // 3
         { status: 4, text: '已删除', type: 'danger' } // 4
       ],
-      totalCount: 0 // 总数据条数
+      totalCount: 0, // 总数据条数
+      pageSize: 10 // 每页大小
     }
   },
   computed: {},
@@ -183,7 +186,7 @@ export default {
     loadArticles (page = 1) {
       getArticles({
         page,
-        per_page: 10
+        per_page: this.pageSize
       }).then(res => {
         const { results, total_count: totalCount } = res.data.data
         this.articles = results
