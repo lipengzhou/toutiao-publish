@@ -35,7 +35,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">发表</el-button>
+          <el-button type="primary" @click="onPublish">发表</el-button>
           <el-button>存入草稿</el-button>
         </el-form-item>
       </el-form>
@@ -77,8 +77,11 @@ export default {
       })
     },
 
-    onSubmit () {
-      console.log('submit!')
+    onPublish () {
+      // 找到数据接口
+      // 封装请求方法
+      // 请求提交表单
+      // 处理响应结果
     }
   }
 }
