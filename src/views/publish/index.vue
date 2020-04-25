@@ -71,6 +71,13 @@ export default {
   watch: {},
   created () {
     this.loadChannels()
+
+    // 由于我们让发布和修改使用的同一个组件
+    // 所以这里要判断
+    // 如果路由路径参数中有 id，则请求展示文章内容
+    if (this.$route.query.id) {
+      this.loadArticle()
+    }
   },
   mounted () {},
   methods: {
@@ -92,6 +99,15 @@ export default {
           type: 'success'
         })
       })
+    },
+
+    // 修改文章：加载文章内容
+    loadArticle () {
+      console.log('loadArticle')
+      // 找到数据接口
+      // 封装请求方法
+      // 请求获取数据
+      // 模板绑定展示
     }
   }
 }
