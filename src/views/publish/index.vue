@@ -46,7 +46,8 @@
 <script>
 import {
   getArticleChannels,
-  addArticle
+  addArticle,
+  getArticle
 } from '@/api/article'
 
 export default {
@@ -107,7 +108,10 @@ export default {
       // 找到数据接口
       // 封装请求方法
       // 请求获取数据
-      // 模板绑定展示
+      getArticle(this.$route.query.id).then(res => {
+        // 模板绑定展示
+        this.article = res.data.data
+      })
     }
   }
 }
