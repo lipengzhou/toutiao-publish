@@ -11,10 +11,10 @@
       </div>
       <el-form ref="form" :model="form" label-width="40px">
         <el-form-item label="标题">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="article.title"></el-input>
         </el-form-item>
         <el-form-item label="内容">
-          <el-input type="textarea" v-model="form.desc"></el-input>
+          <el-input type="textarea" v-model="article.content"></el-input>
         </el-form-item>
         <el-form-item label="封面">
           <el-radio-group v-model="form.resource">
@@ -55,6 +55,14 @@ export default {
         type: [],
         resource: '',
         desc: ''
+      },
+      article: {
+        title: '', // 文章标题
+        content: '', // 文章内容
+        cover: { // 文章封面
+          type: 0, // 封面类型 -1:自动，0-无图，1-1张，3-3张
+          images: [] // 封面图片的地址
+        }
       }
     }
   },
