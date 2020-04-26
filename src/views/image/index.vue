@@ -10,7 +10,7 @@
         <!-- /面包屑路径导航 -->
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
       </div>
-      <div style="padding-bottom: 20px;">
+      <div class="action-head">
         <el-radio-group
           v-model="collect"
           size="mini"
@@ -23,6 +23,10 @@
             :label="true"
           >收藏</el-radio-button>
         </el-radio-group>
+        <el-button
+          size="mini"
+          type="success"
+        >上传素材</el-button>
       </div>
       <!-- 素材列表 -->
       <el-row :gutter="10">
@@ -81,4 +85,10 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.action-head {
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>
