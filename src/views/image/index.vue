@@ -11,9 +11,17 @@
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
       </div>
       <div style="padding-bottom: 20px;">
-        <el-radio-group v-model="radio1" size="mini">
-          <el-radio-button label="全部"></el-radio-button>
-          <el-radio-button label="收藏"></el-radio-button>
+        <el-radio-group
+          v-model="collect"
+          size="mini"
+          @change="onCollectChange"
+        >
+          <el-radio-button
+            :label="false"
+          >全部</el-radio-button>
+          <el-radio-button
+            :label="true"
+          >收藏</el-radio-button>
         </el-radio-group>
       </div>
       <!-- 素材列表 -->
@@ -47,21 +55,27 @@ export default {
   props: {},
   data () {
     return {
-      radio1: '全部',
+      collect: false, // 默认查询全部素材列表
       images: [] // 图片素材列表
     }
   },
   computed: {},
   watch: {},
   created () {
-    this.loadImages()
+    this.loadImages(false)
   },
   mounted () {},
   methods: {
-    loadImages () {
-      getImages().then(res => {
+    loadImages (collect = false) {
+      getImages({
+        collect
+      }).then(res => {
         this.images = res.data.data.results
       })
+    },
+
+    onCollectChange (value) {
+      this.loadImages(value)
     }
   }
 }
