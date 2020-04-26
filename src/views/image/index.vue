@@ -54,7 +54,26 @@
       :visible.sync="dialogUploadVisible"
       :append-to-body="true"
     >
-      hello world
+      <!--
+        upload 组件本身就支持请求提交上传操作，说白了你使用它不用自己去发请求，它会自己发。
+        请求方法：默认就是 POST
+        请求路径：action，必须写完整路径
+        请求头：headers
+       -->
+      <el-upload
+        class="upload-demo"
+        drag
+        action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+        :headers="uploadHeaders"
+        name="image"
+        multiple
+        :show-file-list="false"
+        :on-success="onUploadSuccess"
+      >
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+      </el-upload>
     </el-dialog>
   </div>
 </template>
@@ -67,10 +86,14 @@ export default {
   components: {},
   props: {},
   data () {
+    const user = JSON.parse(window.localStorage.getItem('user'))
     return {
       collect: false, // 默认查询全部素材列表
       images: [], // 图片素材列表
-      dialogUploadVisible: false
+      dialogUploadVisible: false,
+      uploadHeaders: {
+        Authorization: `Bearer ${user.token}`
+      }
     }
   },
   computed: {},
@@ -90,6 +113,14 @@ export default {
 
     onCollectChange (value) {
       this.loadImages(value)
+    },
+
+    onUploadSuccess () {
+      // 关闭对话框
+      this.dialogUploadVisible = false
+
+      // 更新素材列表
+      this.loadImages(false)
     }
   }
 }
