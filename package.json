@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "element-tiptap": "^1.19.0",
     "element-ui": "^2.13.1",
     "json-bigint": "^0.3.0",
     "vue": "^2.6.11",
