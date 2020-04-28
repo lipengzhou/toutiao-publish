@@ -62,6 +62,14 @@
               @click="onCollect(img)"
               :loading="img.loading"
             ></el-button>
+            <el-button
+              size="small"
+              type="danger"
+              icon="el-icon-delete-solid"
+              circle
+              :loading="img.loading"
+              @click="onDelete(img)"
+            ></el-button>
             <!-- <i
               :class="{
                 'el-icon-star-on': img.is_collected,
@@ -69,7 +77,7 @@
               }"
               @click="onCollect(img)"
             ></i> -->
-            <i class="el-icon-delete-solid"></i>
+            <!-- <i class="el-icon-delete-solid"></i> -->
             <!-- <el-button size="mini" icon="el-icon-delete-solid" circle></el-button> -->
           </div>
         </el-col>
@@ -125,7 +133,8 @@
 <script>
 import {
   getImages,
-  collectImage
+  collectImage,
+  deleteImage
 } from '@/api/image'
 
 export default {
@@ -210,6 +219,15 @@ export default {
       //   // 没有收藏，添加收藏
       //   collectImage(img.id, true)
       // }
+    },
+
+    onDelete (img) {
+      img.loading = true
+      deleteImage(img.id).then(res => {
+        // 重新加载数据列表
+        this.loadImages(this.page)
+        img.loading = false
+      })
     }
   }
 }
