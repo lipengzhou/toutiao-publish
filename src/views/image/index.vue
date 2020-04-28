@@ -14,7 +14,7 @@
         <el-radio-group
           v-model="collect"
           size="mini"
-          @change="onCollectChange"
+          @change="loadImages(1)"
         >
           <el-radio-button
             :label="false"
@@ -38,15 +38,36 @@
           :lg="4"
           v-for="(img, index) in images"
           :key="index"
+          class="image-item"
         >
           <el-image
             style="height: 100px"
             :src="img.url"
             fit="cover"
           ></el-image>
+          <div class="image-action">
+            <i class="el-icon-star-on"></i>
+            <i class="el-icon-delete-solid"></i>
+          </div>
         </el-col>
       </el-row>
       <!-- /素材列表 -->
+
+      <!-- 数据分页 -->
+      <!--
+        分页数据改变以后，页码不会变化
+        它需要单独处理高亮的页码
+       -->
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="totalCount"
+        :page-size="pageSize"
+        :current-page.sync="page"
+        @current-change="onPageChange"
+      >
+      </el-pagination>
+      <!-- /数据分页 -->
     </el-card>
 
     <el-dialog
@@ -93,34 +114,52 @@ export default {
       dialogUploadVisible: false,
       uploadHeaders: {
         Authorization: `Bearer ${user.token}`
-      }
+      },
+      totalCount: 0, // 总数据条数
+      pageSize: 5, // 每页大小
+      page: 1 // 当前页码
     }
   },
   computed: {},
   watch: {},
   created () {
-    this.loadImages(false)
+    // 页面初始化加载第 1 页数据
+    this.loadImages(1)
   },
   mounted () {},
   methods: {
-    loadImages (collect = false) {
+    loadImages (page = 1) {
+      // 重置高亮页码，防止数据和页码不对应
+      this.page = page
       getImages({
-        collect
+        collect: this.collect,
+        page,
+        per_page: this.pageSize
       }).then(res => {
         this.images = res.data.data.results
+        this.totalCount = res.data.data.total_count
       })
     },
 
-    onCollectChange (value) {
-      this.loadImages(value)
-    },
+    // onCollectChange () {
+    //   this.loadImages(1)
+    // },
 
     onUploadSuccess () {
       // 关闭对话框
       this.dialogUploadVisible = false
 
       // 更新素材列表
-      this.loadImages(false)
+      this.loadImages(this.page)
+
+      this.$message({
+        type: 'success',
+        message: '上传成功'
+      })
+    },
+
+    onPageChange (page) {
+      this.loadImages(page)
     }
   }
 }
@@ -131,5 +170,23 @@ export default {
   padding-bottom: 20px;
   display: flex;
   justify-content: space-between;
+}
+
+.image-item {
+  position: relative;
+}
+
+.image-action {
+  font-size: 25px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #fff;
+  height: 40px;
+  background-color: rgba(204, 204, 204, .5);
+  position: absolute;
+  bottom: 4px;
+  left: 5px;
+  right: 5px;
 }
 </style>
