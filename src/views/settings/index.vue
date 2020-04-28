@@ -54,6 +54,18 @@
         </el-col>
       </el-row>
     </el-card>
+
+    <el-dialog
+      title="修改头像"
+      :visible.sync="dialogVisible"
+      append-to-body
+    >
+      <img width="150" src="http://toutiao.meiduo.site/Fpjp-yiQyQavWHaL99ut1giTDKml" alt="">
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -83,7 +95,8 @@ export default {
         mobile: '',
         name: '',
         photo: ''
-      } // 用户资料
+      }, // 用户资料
+      dialogVisible: false // 控制上传图片裁切预览的显示状态
     }
   },
   computed: {},
@@ -106,6 +119,7 @@ export default {
       console.log('file change')
 
       // 展示弹出层，预览用户选择的图片
+      this.dialogVisible = true
 
       // 解决选择相同文件不触发 change 事件问题
       this.$refs.file.value = ''
