@@ -56,17 +56,22 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--
+        绑定页码
+        绑定每页大小
+        current-page 控制激活的页码，初始肯定是第 1 页
+        page-sizes 控制可选的每页大小
+       -->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="1"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page.sync="page"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size.sync="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="totalCount"
         background
-      >
-      </el-pagination>
+      />
     </el-card>
   </div>
 </template>
@@ -83,24 +88,10 @@ export default {
   props: {},
   data () {
     return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }],
-      articles: [] // 文章数据列表
+      articles: [], // 文章数据列表
+      totalCount: 0, // 总数据条数
+      pageSize: 10,
+      page: 1 // 当前激活的页码
     }
   },
   computed: {},
@@ -110,17 +101,27 @@ export default {
   },
   mounted () {},
   methods: {
-    handleSizeChange () {},
-    handleCurrentChange () {},
-    loadArticles () {
+    handleSizeChange () {
+      this.loadArticles(1)
+    },
+    handleCurrentChange (page) {
+      // 页码改变，加载指定页码数据
+      this.loadArticles(page)
+    },
+    loadArticles (page = 1) {
+      // 让分页组件激活的页码和请求数据的页码保持一致
+      this.page = page
       getArticles({
-        response_type: 'comment'
+        response_type: 'comment',
+        page,
+        per_page: this.pageSize
       }).then(res => {
         const { results } = res.data.data
         results.forEach(article => {
           article.statusDisabled = false
         })
         this.articles = results
+        this.totalCount = res.data.data.total_count
       })
     },
 
