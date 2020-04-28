@@ -36,7 +36,7 @@
         </el-table-column>
         <el-table-column
           prop="address"
-          label="状态">
+          label="评论状态">
           <template slot-scope="scope">
             {{ scope.row.comment_status ? '正常' : '关闭' }}
           </template>
@@ -49,6 +49,7 @@
               v-model="scope.row.comment_status"
               active-color="#13ce66"
               inactive-color="#ff4949"
+              :disabled="scope.row.statusDisabled"
               @change="onStatusChange(scope.row)"
             >
             </el-switch>
@@ -71,7 +72,10 @@
 </template>
 
 <script>
-import { getArticles } from '@/api/article'
+import {
+  getArticles,
+  updateCommentStatus
+} from '@/api/article'
 
 export default {
   name: 'CommentIndex',
@@ -112,12 +116,27 @@ export default {
       getArticles({
         response_type: 'comment'
       }).then(res => {
-        this.articles = res.data.data.results
+        const { results } = res.data.data
+        results.forEach(article => {
+          article.statusDisabled = false
+        })
+        this.articles = results
       })
     },
 
     onStatusChange (article) {
+      // 禁用开关
+      article.statusDisabled = true
+
       // 请求提交修改
+      updateCommentStatus(article.id.toString(), article.comment_status).then(res => {
+        // 启用开关
+        article.statusDisabled = false
+        this.$message({
+          type: 'success',
+          message: article.comment_status ? '开启文章评论状态' : '关闭文章评论状态'
+        })
+      })
     }
   }
 }
