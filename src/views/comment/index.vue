@@ -48,7 +48,9 @@
             <el-switch
               v-model="scope.row.comment_status"
               active-color="#13ce66"
-              inactive-color="#ff4949">
+              inactive-color="#ff4949"
+              @change="onStatusChange(scope.row)"
+            >
             </el-switch>
           </template>
         </el-table-column>
@@ -112,6 +114,10 @@ export default {
       }).then(res => {
         this.articles = res.data.data.results
       })
+    },
+
+    onStatusChange (article) {
+      // 请求提交修改
     }
   }
 }
