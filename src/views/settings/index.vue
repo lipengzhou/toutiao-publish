@@ -13,19 +13,19 @@
         <el-col :span="15">
           <el-form ref="form" :model="form" label-width="70px">
             <el-form-item label="编号">
-              123
+              {{ user.id }}
             </el-form-item>
             <el-form-item label="手机">
-              456
+              {{ user.mobile }}
             </el-form-item>
             <el-form-item label="媒体名称">
-              <el-input v-model="form.name"></el-input>
+              <el-input v-model="user.name"></el-input>
             </el-form-item>
             <el-form-item label="媒体介绍">
-              <el-input type="textarea" v-model="form.desc"></el-input>
+              <el-input type="textarea" v-model="user.intro"></el-input>
             </el-form-item>
             <el-form-item label="邮箱">
-              <el-input v-model="form.name"></el-input>
+              <el-input v-model="user.email"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -37,7 +37,7 @@
             shape="square"
             :size="150"
             fit="cover"
-            src="http://toutiao.meiduo.site/Fv0sNupc0RlG2gnFoT-XXFpsNifI"
+            :src="user.photo"
           ></el-avatar>
           <p>点击修改头像</p>
         </el-col>
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { getUserProfile } from '@/api/user'
+
 export default {
   name: 'SettingsIndex',
   components: {},
@@ -62,16 +64,31 @@ export default {
         type: [],
         resource: '',
         desc: ''
-      }
+      },
+      user: {
+        email: '',
+        id: null,
+        intro: '',
+        mobile: '',
+        name: '',
+        photo: ''
+      } // 用户资料
     }
   },
   computed: {},
   watch: {},
-  created () {},
+  created () {
+    this.loadUser()
+  },
   mounted () {},
   methods: {
     onSubmit () {
       console.log('submit!')
+    },
+    loadUser () {
+      getUserProfile().then(res => {
+        this.user = res.data.data
+      })
     }
   }
 }
