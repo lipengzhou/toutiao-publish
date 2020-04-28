@@ -49,6 +49,7 @@
             type="file"
             hidden
             ref="file"
+            @change="onFileChange"
           >
         </el-col>
       </el-row>
@@ -99,6 +100,15 @@ export default {
       getUserProfile().then(res => {
         this.user = res.data.data
       })
+    },
+
+    onFileChange () {
+      console.log('file change')
+
+      // 展示弹出层，预览用户选择的图片
+
+      // 解决选择相同文件不触发 change 事件问题
+      this.$refs.file.value = ''
     }
   }
 }
