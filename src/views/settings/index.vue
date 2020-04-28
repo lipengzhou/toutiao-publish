@@ -60,7 +60,7 @@
       :visible.sync="dialogVisible"
       append-to-body
     >
-      <img width="150" src="http://toutiao.meiduo.site/Fpjp-yiQyQavWHaL99ut1giTDKml" alt="">
+      <img width="150" :src="previewImage" alt="">
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -96,7 +96,8 @@ export default {
         name: '',
         photo: ''
       }, // 用户资料
-      dialogVisible: false // 控制上传图片裁切预览的显示状态
+      dialogVisible: false, // 控制上传图片裁切预览的显示状态
+      previewImage: '' // 预览图片
     }
   },
   computed: {},
@@ -116,7 +117,12 @@ export default {
     },
 
     onFileChange () {
-      console.log('file change')
+      // 处于图片预览
+      const file = this.$refs.file
+
+      const blobData = window.URL.createObjectURL(file.files[0])
+
+      this.previewImage = blobData
 
       // 展示弹出层，预览用户选择的图片
       this.dialogVisible = true
