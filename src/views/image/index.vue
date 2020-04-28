@@ -59,6 +59,7 @@
                 'el-icon-star-on': img.is_collected,
                 'el-icon-star-off': !img.is_collected
               }"
+              @click="onCollect(img)"
             ></i>
             <i class="el-icon-delete-solid"></i>
           </div>
@@ -113,7 +114,10 @@
 </template>
 
 <script>
-import { getImages } from '@/api/image'
+import {
+  getImages,
+  collectImage
+} from '@/api/image'
 
 export default {
   name: 'ImageIndex',
@@ -173,6 +177,19 @@ export default {
 
     onPageChange (page) {
       this.loadImages(page)
+    },
+
+    onCollect (img) {
+      collectImage(img.id, !img.is_collected).then(res => {
+        img.is_collected = !img.is_collected
+      })
+      // if (img.is_collected) {
+      //   // 已收藏，取消收藏
+      //   collectImage(img.id, false)
+      // } else {
+      //   // 没有收藏，添加收藏
+      //   collectImage(img.id, true)
+      // }
     }
   }
 }
