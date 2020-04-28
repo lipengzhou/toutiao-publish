@@ -46,7 +46,20 @@
             fit="cover"
           ></el-image>
           <div class="image-action">
-            <i class="el-icon-star-on"></i>
+            <!--
+              class 样式绑定
+               {
+                  CSS类名: 布尔值
+               }
+               true：作用类名
+               false：不作用类名
+             -->
+            <i
+              :class="{
+                'el-icon-star-on': img.is_collected,
+                'el-icon-star-off': !img.is_collected
+              }"
+            ></i>
             <i class="el-icon-delete-solid"></i>
           </div>
         </el-col>
@@ -116,7 +129,7 @@ export default {
         Authorization: `Bearer ${user.token}`
       },
       totalCount: 0, // 总数据条数
-      pageSize: 5, // 每页大小
+      pageSize: 20, // 每页大小
       page: 1 // 当前页码
     }
   },
