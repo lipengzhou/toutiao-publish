@@ -59,11 +59,13 @@
       title="修改头像"
       :visible.sync="dialogVisible"
       append-to-body
+      @opened="onDialogOpened"
     >
       <div class="preview-image-wrap">
         <img
           class="preview-image"
           :src="previewImage"
+          ref="preview-image"
         >
       </div>
       <span slot="footer" class="dialog-footer">
@@ -76,6 +78,25 @@
 
 <script>
 import { getUserProfile } from '@/api/user'
+import 'cropperjs/dist/cropper.css'
+import Cropper from 'cropperjs'
+
+// 获取图片 DOM 节点
+// const image = this.$refs['preview-image']
+//
+// 初始化裁切器
+// const cropper = new Cropper(image, {
+//   aspectRatio: 16 / 9,
+//   crop(event) {
+//     console.log(event.detail.x);
+//     console.log(event.detail.y);
+//     console.log(event.detail.width);
+//     console.log(event.detail.height);
+//     console.log(event.detail.rotate);
+//     console.log(event.detail.scaleX);
+//     console.log(event.detail.scaleY);
+//   },
+// });
 
 export default {
   name: 'SettingsIndex',
@@ -134,6 +155,29 @@ export default {
 
       // 解决选择相同文件不触发 change 事件问题
       this.$refs.file.value = ''
+    },
+
+    onDialogOpened () {
+      // 图片裁切器必须基于 img 进行初始化
+      // 注意：img 必须是可见状态才能正常完成初始化
+      //       因为我们这里要在对话框里面初始化裁切器
+      //       所以务必要在对话框完全打开的状态去进行初始化。
+      // 获取图片 DOM 节点
+      const image = this.$refs['preview-image']
+
+      // 初始化裁切器
+      const cropper = new Cropper(image, {
+        aspectRatio: 16 / 9,
+        crop (event) {
+          console.log(event.detail.x)
+          console.log(event.detail.y)
+          console.log(event.detail.width)
+          console.log(event.detail.height)
+          console.log(event.detail.rotate)
+          console.log(event.detail.scaleX)
+          console.log(event.detail.scaleY)
+        }
+      })
     }
   }
 }
