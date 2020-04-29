@@ -71,7 +71,10 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="onUpdatePhoto"
+        >确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -198,6 +201,18 @@ export default {
     onDialogClosed () {
       // 对话框关闭，销毁裁切器
       // this.cropper.destroy()
+    },
+
+    onUpdatePhoto () {
+      // 获取裁切的图片对象
+      this.cropper.getCroppedCanvas().toBlob(file => {
+        const fd = new FormData()
+        fd.append('photo', file)
+        // 请求提交 fd
+      })
+      // 请求更新用户头像
+      // 关闭对话框
+      // 更新视图展示
     }
   }
 }
