@@ -60,6 +60,7 @@
       :visible.sync="dialogVisible"
       append-to-body
       @opened="onDialogOpened"
+      @closed="onDialogClosed"
     >
       <div class="preview-image-wrap">
         <img
@@ -123,7 +124,8 @@ export default {
         photo: ''
       }, // 用户资料
       dialogVisible: false, // 控制上传图片裁切预览的显示状态
-      previewImage: '' // 预览图片
+      previewImage: '', // 预览图片
+      cropper: null // 裁切器示例
     }
   },
   computed: {},
@@ -165,8 +167,16 @@ export default {
       // 获取图片 DOM 节点
       const image = this.$refs['preview-image']
 
+      // 第1次初始化好以后，如果预览裁切的图片发生了变化，裁切器默认不会更新
+      // 如果需要预览图片发生变化更新裁切器：
+      //    方式一：裁切器.replace 方法
+      //    方式二：销毁裁切器，重新初始化
       // 初始化裁切器
-      const cropper = new Cropper(image, {
+      if (this.cropper) {
+        this.cropper.replace(this.previewImage)
+        return
+      }
+      this.cropper = new Cropper(image, {
         aspectRatio: 16 / 9,
         crop (event) {
           console.log(event.detail.x)
@@ -178,6 +188,11 @@ export default {
           console.log(event.detail.scaleY)
         }
       })
+    },
+
+    onDialogClosed () {
+      // 对话框关闭，销毁裁切器
+      // this.cropper.destroy()
     }
   }
 }
