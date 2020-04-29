@@ -58,6 +58,7 @@
 <script>
 import AppAside from './components/aside'
 import { getUserProfile } from '@/api/user'
+import globalBus from '@/utils/global-bus'
 
 export default {
   name: 'LayoutIndex',
@@ -76,6 +77,14 @@ export default {
   created () {
     // 组件初始化好，请求获取用户资料
     this.loadUserProfile()
+
+    // 注册自定义事件
+    // 当这个事件发布以后，这个注册函数就会被调用到
+    globalBus.$on('update-user', (data) => {
+      // this.user = data // 注意：不要这么做，对象之间赋值的是引用，会导致相互影响的问题
+      this.user.name = data.name
+      this.user.photo = data.photo
+    })
   },
   mounted () {},
   methods: {

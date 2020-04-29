@@ -93,6 +93,7 @@ import {
 } from '@/api/user'
 import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
+import globalBus from '@/utils/global-bus'
 
 export default {
   name: 'SettingsIndex',
@@ -141,6 +142,10 @@ export default {
 
         // 关闭 loading 状态
         this.updateProfileLoading = false
+
+        // 更新头部当前登录用户的信息
+        // 发布通知，用户信息已修改
+        globalBus.$emit('update-user', this.user)
       })
     },
     loadUser () {
@@ -229,6 +234,9 @@ export default {
             type: 'success',
             message: '更新头像成功'
           })
+
+          // 更新顶部登录用户的信息
+          globalBus.$emit('update-user', this.user)
 
           // 把服务端返回的图片进行展示有点慢
           // this.user.photo = res.data.data.photo
