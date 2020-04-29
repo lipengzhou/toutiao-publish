@@ -46,3 +46,12 @@ export const updateUserPhoto = data => {
     data
   })
 }
+
+// 修改用户基本信息
+export const updateUserProfile = data => {
+  return request({
+    method: 'PATCH',
+    url: '/mp/v1_0/user/profile',
+    data
+  })
+}

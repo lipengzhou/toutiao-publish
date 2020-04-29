@@ -11,7 +11,7 @@
       </div>
       <el-row>
         <el-col :span="15">
-          <el-form ref="form" :model="form" label-width="70px">
+          <el-form ref="form" :model="user" label-width="70px">
             <el-form-item label="编号">
               {{ user.id }}
             </el-form-item>
@@ -28,7 +28,11 @@
               <el-input v-model="user.email"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">保存</el-button>
+              <el-button
+                type="primary"
+                :loading="updateProfileLoading"
+                @click="onUpdateUser"
+              >保存</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -84,27 +88,11 @@
 <script>
 import {
   getUserProfile,
-  updateUserPhoto
+  updateUserPhoto,
+  updateUserProfile
 } from '@/api/user'
 import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
-
-// 获取图片 DOM 节点
-// const image = this.$refs['preview-image']
-//
-// 初始化裁切器
-// const cropper = new Cropper(image, {
-//   aspectRatio: 16 / 9,
-//   crop(event) {
-//     console.log(event.detail.x);
-//     console.log(event.detail.y);
-//     console.log(event.detail.width);
-//     console.log(event.detail.height);
-//     console.log(event.detail.rotate);
-//     console.log(event.detail.scaleX);
-//     console.log(event.detail.scaleY);
-//   },
-// });
 
 export default {
   name: 'SettingsIndex',
@@ -112,16 +100,6 @@ export default {
   props: {},
   data () {
     return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
       user: {
         email: '',
         id: null,
@@ -133,7 +111,8 @@ export default {
       dialogVisible: false, // 控制上传图片裁切预览的显示状态
       previewImage: '', // 预览图片
       cropper: null, // 裁切器示例
-      updatePhotoLoading: false // 更新用户头像 loading 状态
+      updatePhotoLoading: false, // 更新用户头像 loading 状态
+      updateProfileLoading: false // 更新基本信息的 loading 状态
     }
   },
   computed: {},
@@ -143,8 +122,26 @@ export default {
   },
   mounted () {},
   methods: {
-    onSubmit () {
-      console.log('submit!')
+    onUpdateUser () {
+      // 表单验证
+      // 验证通过，提交表单
+
+      // 开启 loading 状态
+      this.updateProfileLoading = true
+      const { name, intro, email } = this.user
+      updateUserProfile({
+        name,
+        intro,
+        email
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '保存成功'
+        })
+
+        // 关闭 loading 状态
+        this.updateProfileLoading = false
+      })
     },
     loadUser () {
       getUserProfile().then(res => {
