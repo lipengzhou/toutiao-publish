@@ -81,7 +81,10 @@
 </template>
 
 <script>
-import { getUserProfile } from '@/api/user'
+import {
+  getUserProfile,
+  updateUserPhoto
+} from '@/api/user'
 import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
 
@@ -208,11 +211,20 @@ export default {
       this.cropper.getCroppedCanvas().toBlob(file => {
         const fd = new FormData()
         fd.append('photo', file)
-        // 请求提交 fd
+        // 请求更新用户头像请求提交 fd
+        updateUserPhoto(fd).then(res => {
+          console.log(res)
+          // 关闭对话框
+          this.dialogVisible = false
+          // 更新视图展示
+
+          // 直接把裁切结果的文件对象转为 blob 数据本地预览
+          this.user.photo = window.URL.createObjectURL(file)
+
+          // 把服务端返回的图片进行展示有点慢
+          // this.user.photo = res.data.data.photo
+        })
       })
-      // 请求更新用户头像
-      // 关闭对话框
-      // 更新视图展示
     }
   }
 }
