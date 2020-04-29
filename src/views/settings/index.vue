@@ -47,8 +47,8 @@
           <input
             id="file"
             type="file"
-            hidden
             ref="file"
+            hidden
             @change="onFileChange"
           >
         </el-col>
@@ -60,7 +60,12 @@
       :visible.sync="dialogVisible"
       append-to-body
     >
-      <img width="150" :src="previewImage" alt="">
+      <div class="preview-image-wrap">
+        <img
+          class="preview-image"
+          :src="previewImage"
+        >
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -134,4 +139,15 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.preview-image-wrap {
+  /* Ensure the size of the image fit the container perfectly */
+  .preview-image {
+    display: block;
+
+    /* This rule is very important, please don't ignore this */
+    max-width: 100%;
+    height: 200px;
+  }
+}
+</style>
