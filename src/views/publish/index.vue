@@ -40,14 +40,32 @@
             当你给事件处理函数传递了自定义参数以后，就无法得到原本的那个数据参数了。
 
             如果想要在事件处理函数自定义传参以后还想得到原来的那个事件本身的参数，则手动指定 $event，它就代表那个事件本身的参数
+
+            在组件上使用 v-model
+
+            当你给子组件提供的数据既要使用还要修改，这个时候我们可以使用 v-model 简化数据绑定。
+            v-model="article.cover.images[index]"
+              给子组件传递了一个名字叫 value 的数据
+              :value="article.cover.images[index]"
+              默认监听 input 事件，当事件发生，它会让绑定数据 = 事件参数
+              @input="article.cover.images[index] = 事件参数"
+
+            注意：v-model 仅仅是简写了而已，本质还在在父子组件通信
+
+            v-model 的参考文档：https://cn.vuejs.org/v2/guide/components-custom-events.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E7%9A%84-v-model
            -->
           <template v-if="article.cover.type > 0">
             <upload-cover
               :key="cover"
               v-for="(cover, index) in article.cover.type"
+              v-model="article.cover.images[index]"
+            />
+            <!-- <upload-cover
+              :key="cover"
+              v-for="(cover, index) in article.cover.type"
               :cover-image="article.cover.images[index]"
               @update-cover="onUpdateCover(index, $event)"
-            />
+            /> -->
           </template>
         </el-form-item>
         <el-form-item label="频道" prop="channel_id">

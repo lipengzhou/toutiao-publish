@@ -4,7 +4,7 @@
       <img
         class="cover-image"
         ref="cover-image"
-        :src="coverImage"
+        :src="value"
       >
     </div>
 
@@ -46,7 +46,8 @@ import { uploadImage } from '@/api/image'
 export default {
   name: 'UploadCover',
   components: {},
-  props: ['cover-image'],
+  props: ['value'],
+  // props: ['cover-image'],
   data () {
     return {
       dialogVisible: false,
@@ -87,14 +88,14 @@ export default {
         const fd = new FormData()
         fd.append('image', file)
         uploadImage(fd).then(res => {
-          console.log(res)
           // 关闭弹出层
           this.dialogVisible = false
           // 展示上传的图片
-          this.$refs['cover-image'].src = res.data.data.url
+          // this.$refs['cover-image'].src = res.data.data.url
 
           // 将图片地址发送给父组件
-          this.$emit('update-cover', res.data.data.url)
+          this.$emit('input', res.data.data.url)
+          // this.$emit('update-cover', res.data.data.url)
         })
       }
     }
