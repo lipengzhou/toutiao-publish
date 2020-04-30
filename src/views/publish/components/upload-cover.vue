@@ -18,6 +18,7 @@
           <image-list
             :is-show-add="false"
             :is-show-action="false"
+            :foo="666"
           />
         </el-tab-pane>
         <el-tab-pane label="上传图片" name="second">

@@ -36,6 +36,7 @@
           :src="img.url"
           fit="cover"
         ></el-image>
+        <div class="selected"></div>
         <div v-if="isShowAction" class="image-action">
           <!--
             class 样式绑定
@@ -130,16 +131,27 @@ import {
 export default {
   name: 'ImageList',
   components: {},
+  // 使用对象的方式定义 prop，更严谨，功能更丰富，强烈建议在项目中使用
+  // 参考文档：https://cn.vuejs.org/v2/guide/components-props.html#Prop-%E9%AA%8C%E8%AF%81
   props: {
+    foo: {
+      type: Number,
+      // required: true,
+      default: 123
+    },
+    // 是否显示添加素材
     isShowAdd: {
       type: Boolean, // 布尔值
       default: true // 默认值
     },
+
+    // 是否显示图片下方的操作（收藏和删除）
     isShowAction: {
       type: Boolean,
       default: true
     }
   },
+  // 使用数组声明 prop，不建议，不够严谨，而且功能也不够强大，仅适合 demo 演示
   // props: ['dsadsadsa'],
   data () {
     const user = JSON.parse(window.localStorage.getItem('user'))
@@ -256,5 +268,18 @@ export default {
   bottom: 4px;
   left: 5px;
   right: 5px;
+}
+
+.selected {
+  background: url(./selected.png) no-repeat;
+  background-size: cover;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
