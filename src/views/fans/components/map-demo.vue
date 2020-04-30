@@ -7,6 +7,11 @@
 // 2. 加载 echarts
 import echarts from 'echarts'
 
+// 如果使用依赖百度地图的图表，则必须
+//  1、加载百度地图的 JavaScript SDK 脚本文件
+//  2、加载 echarts 百度地图的扩展
+import 'echarts/dist/extension/bmap'
+
 export default {
   name: 'MppDemo',
   components: {},

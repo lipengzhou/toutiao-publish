@@ -7,6 +7,10 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1770181_cpjr082w9h7.css">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <!--引入百度地图的jssdk，这里需要使用你在百度地图开发者平台申请的 ak-->
+    <!-- 百度地图 SDK 脚本会在全局暴露一个数据：BMap -->
+    <!-- 注意：在项目代码中访问第三方全局数据，必须加 window 前缀 -->
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=SA8ZwziW8T6XQ1oXGWvGOGmaakPQkjfG"></script>
   </head>
   <body>
     <noscript>
