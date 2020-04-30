@@ -26,7 +26,9 @@ export default {
     ImageList
   },
   props: {},
-  data () {},
+  data () {
+    return {}
+  },
   computed: {},
   watch: {},
   created () {},

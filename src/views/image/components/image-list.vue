@@ -14,6 +14,7 @@
         >收藏</el-radio-button>
       </el-radio-group>
       <el-button
+        v-if="isShowAdd"
         size="mini"
         type="success"
         @click="dialogUploadVisible = true"
@@ -35,7 +36,7 @@
           :src="img.url"
           fit="cover"
         ></el-image>
-        <div class="image-action">
+        <div v-if="isShowAction" class="image-action">
           <!--
             class 样式绑定
              {
@@ -129,7 +130,17 @@ import {
 export default {
   name: 'ImageList',
   components: {},
-  props: {},
+  props: {
+    isShowAdd: {
+      type: Boolean, // 布尔值
+      default: true // 默认值
+    },
+    isShowAction: {
+      type: Boolean,
+      default: true
+    }
+  },
+  // props: ['dsadsadsa'],
   data () {
     const user = JSON.parse(window.localStorage.getItem('user'))
     return {
