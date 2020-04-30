@@ -15,10 +15,17 @@
     >
       <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="素材库" name="first">
+          <!--
+            ref 有两个作用
+            1、作用到普通 HTML 标签上可以获取 DOM
+            2、作用到组件上可以获取组件
+           -->
           <image-list
             :is-show-add="false"
             :is-show-action="false"
+            is-show-selected
             :foo="666"
+            ref="image-list"
           />
         </el-tab-pane>
         <el-tab-pane label="上传图片" name="second">
@@ -104,6 +111,18 @@ export default {
           this.$emit('input', res.data.data.url)
           // this.$emit('update-cover', res.data.data.url)
         })
+      } else if (this.activeName === 'first') {
+        // 还有一种组件通信方式：父组件可以直接访问子组件中的数据
+        const imageList = this.$refs['image-list']
+        const selected = imageList.selected
+        if (selected === null) {
+          this.$message('请选择封面图片')
+          return
+        }
+        // 关闭对话框
+        this.dialogVisible = false
+        // 修改父组件绑定数据
+        this.$emit('input', imageList.images[selected].url)
       }
     }
   }

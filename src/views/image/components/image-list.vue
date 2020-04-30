@@ -39,7 +39,7 @@
         ></el-image>
         <div
           class="selected"
-          v-if="selected === index"
+          v-if="isShowSelected && selected === index"
         ></div>
         <div v-if="isShowAction" class="image-action">
           <!--
@@ -153,6 +153,11 @@ export default {
     isShowAction: {
       type: Boolean,
       default: true
+    },
+
+    isShowSelected: {
+      type: Boolean,
+      default: false
     }
   },
   // 使用数组声明 prop，不建议，不够严谨，而且功能也不够强大，仅适合 demo 演示
