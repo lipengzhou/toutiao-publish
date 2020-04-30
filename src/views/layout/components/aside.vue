@@ -4,7 +4,7 @@
    -->
   <el-menu
     class="nav-menu el-menu-vertical-demo"
-    default-active="/"
+    :default-active="$route.path"
     background-color="#002033"
     text-color="#fff"
     active-text-color="#ffd04b"
