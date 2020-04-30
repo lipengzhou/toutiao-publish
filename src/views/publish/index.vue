@@ -34,10 +34,19 @@
             <el-radio :label="0">无图</el-radio>
             <el-radio :label="-1">自动</el-radio>
           </el-radio-group>
+          <!--
+            我们需要把选择的封面图片的地址放到 article.cover.images 数组中
+
+            当你给事件处理函数传递了自定义参数以后，就无法得到原本的那个数据参数了。
+
+            如果想要在事件处理函数自定义传参以后还想得到原来的那个事件本身的参数，则手动指定 $event，它就代表那个事件本身的参数
+           -->
           <template v-if="article.cover.type > 0">
             <upload-cover
               :key="cover"
-              v-for="cover in article.cover.type"
+              v-for="(cover, index) in article.cover.type"
+              :cover-image="article.cover.images[index]"
+              @update-cover="onUpdateCover(index, $event)"
             />
           </template>
         </el-form-item>
@@ -244,6 +253,10 @@ export default {
         // 模板绑定展示
         this.article = res.data.data
       })
+    },
+
+    onUpdateCover (index, url) {
+      this.article.cover.images[index] = url
     }
   }
 }
