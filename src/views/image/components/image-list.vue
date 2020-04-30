@@ -30,13 +30,17 @@
         v-for="(img, index) in images"
         :key="index"
         class="image-item"
+        @click.native="selected = index"
       >
         <el-image
           style="height: 100px"
           :src="img.url"
           fit="cover"
         ></el-image>
-        <div class="selected"></div>
+        <div
+          class="selected"
+          v-if="selected === index"
+        ></div>
         <div v-if="isShowAction" class="image-action">
           <!--
             class 样式绑定
@@ -164,7 +168,8 @@ export default {
       },
       totalCount: 0, // 总数据条数
       pageSize: 20, // 每页大小
-      page: 1 // 当前页码
+      page: 1, // 当前页码
+      selected: null // 选中的索引
     }
   },
   computed: {},
