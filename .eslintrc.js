@@ -26,9 +26,9 @@ module.exports = {
     //    development  开发环境
     //
     // no-console 是不允许代码中出现 console.xxx 之类的代码，例如 console.log
-    'no-console': 'off',
-    'no-debugger': 'off',
-    'no-unused-vars': 'off' // 关闭这个规则验证
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-unused-vars': process.env.NODE_ENV === 'production' ? 'warn' : 'off' // 关闭这个规则验证
     // 'semi': ['error', 'always']
   }
 }
