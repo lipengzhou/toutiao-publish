@@ -1,24 +1,21 @@
-# toutiao-publish-admin
+# toutiao-publish
 
-## Project setup
-```
+## 相关资源
+
+- 项目笔记：www.yuque.com/lipengzhou/toutiao-publish-vue
+- 预览地址：toutiao.publish.lipengzhou.com
+
+## 本地开发
+
+```shell
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+# 启动开发服务
 npm run serve
-```
 
-### Compiles and minifies for production
-```
+# 编译构建
 npm run build
-```
 
-### Lints and fixes files
-```
+# 校验代码格式规范
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
